@@ -39,6 +39,8 @@ dependencies:
   firebase_storage: ^13.4.6
   firebase_messaging: ^16.5.0
   gap: ^3.0.1
+  quickalert: ^1.1.0
+  get: ^4.7.3
 
 dev_dependencies:
   flutter_launcher_icons: "^0.14.4"

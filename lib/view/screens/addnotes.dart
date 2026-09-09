@@ -1,32 +1,14 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:notes/components/custombuttonform.dart';
-import 'package:notes/components/customtext.dart';
-import 'package:notes/components/customtextfield.dart';
+import 'package:get/get_state_manager/src/simple/get_view.dart';
+import 'package:get/route_manager.dart';
+import 'package:notes/controller/addnotesController.dart';
+import 'package:notes/view/components/custombuttonform.dart';
+import 'package:notes/view/components/customtext.dart';
+import 'package:notes/view/components/customtextfield.dart';
 
-class AddElement extends StatefulWidget {
-  const AddElement({super.key});
-
-  @override
-  State<AddElement> createState() => _AddElementState();
-}
-
-class _AddElementState extends State<AddElement> {
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  TextEditingController name = TextEditingController();
-  CollectionReference notes = FirebaseFirestore.instance.collection("notes");
-
-  addnote() async {
-    if (formKey.currentState!.validate()) {
-      try {
-        await notes.add({"name": name.text});
-        Navigator.of(context).pushReplacementNamed("homepage");
-      } catch (e) {
-        debugPrint("Error $e");
-      }
-    }
-  }
+class AddNotes extends GetView<AddNoteController> {
+  const AddNotes({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +17,7 @@ class _AddElementState extends State<AddElement> {
         automaticallyImplyLeading: false,
         leading: IconButton(
           onPressed: () {
-            Navigator.of(context).pop();
+            Get.back();
           },
           icon: Icon(Icons.arrow_back, color: Colors.white),
         ),
@@ -47,13 +29,13 @@ class _AddElementState extends State<AddElement> {
         ),
       ),
       body: Form(
-        key: formKey,
+        key: controller.formKey,
         child: ListView(
           padding: EdgeInsets.symmetric(vertical: 30, horizontal: 15),
           children: [
             CustomTextFormField(
               hint: "Enter name",
-              controller: name,
+              controller: controller.name,
               validator: (val) {
                 if (val == "") return "can't be empty";
                 return null;
@@ -62,7 +44,7 @@ class _AddElementState extends State<AddElement> {
             Gap(40),
             ButtonForm(
               onpressed: () {
-                addnote();
+                controller.addNote();
               },
               child: TextForm(
                 text: "Add",

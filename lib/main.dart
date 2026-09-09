@@ -1,7 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:notes/elements/addelement.dart';
-import 'package:notes/screens/homescreen.dart';
+import 'package:get/get_navigation/get_navigation.dart';
+import 'package:notes/core/appbinding.dart';
+import 'package:notes/view/screens/addnotes.dart';
+import 'package:notes/view/screens/homescreen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,7 +16,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       theme: ThemeData(
         appBarTheme: AppBarTheme(
           backgroundColor: Colors.orange,
@@ -22,12 +24,12 @@ class MyApp extends StatelessWidget {
           shadowColor: Colors.black,
         ),
       ),
+      initialBinding: AppBinding(),
       debugShowCheckedModeBanner: false,
-      home: Homepage(),
-      routes: {
-        "homepage": (context) => Homepage(),
-        "addelement": (context) => AddElement(),
-      },
+      getPages: [
+        GetPage(name: "/", page: () => HomePage()),
+        GetPage(name: "/addelement", page: () => AddNotes()),
+      ],
     );
   }
 }

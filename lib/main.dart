@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:notes/core/appbinding.dart';
 import 'package:notes/view/screens/addnotes.dart';
+import 'package:notes/view/screens/editnote.dart';
 import 'package:notes/view/screens/homescreen.dart';
 
 void main() async {
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
       getPages: [
         GetPage(name: "/", page: () => HomePage()),
         GetPage(name: "/addelement", page: () => AddNotes()),
+        GetPage(name: "/editnote", page: () => EditNote()),
       ],
     );
   }

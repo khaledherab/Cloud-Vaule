@@ -52,13 +52,35 @@ class HomePage extends GetView<HomeController> {
                       onLongPress: () {
                         QuickAlert.show(
                           context: context,
-                          type: QuickAlertType.warning,
+                          type: QuickAlertType.info,
                           animType: QuickAlertAnimType.scale,
-                          text: "Do you want Delete this note",
+                          text: "ماذا تريد حذف / تعديل ",
+                          cancelBtnText: "حذف",
+                          confirmBtnText: "تعديل",
+                          confirmBtnColor: Colors.orange,
+                          confirmBtnTextStyle: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          cancelBtnTextStyle: TextStyle(
+                            color: Colors.red,
+                            fontWeight: FontWeight.bold,
+                          ),
                           onCancelBtnTap: () {
                             Get.back();
+                            String docid = controller.data[index].id;
+                            controller.deleteNote(docid);
                           },
-                          cancelBtnText: "Cancel",
+                          onConfirmBtnTap: () async {
+                            Get.back();
+                            Get.toNamed(
+                              "/editnote",
+                              arguments: {
+                                "id": controller.data[index].id,
+                                "name": controller.data[index]['name'],
+                              },
+                            );
+                          },
                           showCancelBtn: true,
                         );
                       },
